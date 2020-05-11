@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 3f;
+    public float moveSpeed = 5f;
 
     public Rigidbody2D rb;
     public Animator animator;
 
-    Vector2 movement;
+    private Vector2 movement;
+    private bool turnRight = true;
 
     // Update is called once per frame
     void Update()
@@ -17,20 +18,26 @@ public class PlayerMovement : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
-        if (movement.x < 0) {
-            transform.localScale = new Vector3 (-1f, transform.localScale.y, transform.localScale.z);
-        } else if (movement.x > 0) {
-            transform.localScale = new Vector3 (1f, transform.localScale.y, transform.localScale.z);
+        if (movement.x > 0) {
+            turnRight = true;
+        } else if (movement.x < 0) {
+            turnRight = false;
         }
 
+        //animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Speed", movement.sqrMagnitude);
+        animator.SetBool("Turn Right", turnRight);
 
         if (Input.GetKeyDown(KeyCode.Space)) {
-            animator.SetTrigger("Attack");
+            Attack();
         }
     }
 
     void FixedUpdate() {
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+    }
+
+    void Attack() {
+        animator.SetTrigger("Attack");
     }
 }
