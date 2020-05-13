@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    public float moveSpeed = 3f;
 
     public Rigidbody2D rb;
     public Animator animator;
 
-    private Vector2 movement;
-    private bool turnRight = true;
+    public Transform attackPoint;
+    public int attackDamage = 25;
+    public float attackRange = 0.5f;
+    public LayerMask enemyLayers;
+
+    Vector2 movement;
 
     // Update is called once per frame
     void Update()
@@ -18,15 +22,13 @@ public class PlayerController : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
-        if (movement.x > 0) {
-            turnRight = true;
-        } else if (movement.x < 0) {
-            turnRight = false;
+        if (movement.x < 0) {
+            transform.localScale = new Vector3 (-1f, transform.localScale.y, transform.localScale.z);
+        } else if (movement.x > 0) {
+            transform.localScale = new Vector3 (1f, transform.localScale.y, transform.localScale.z);
         }
 
-        //animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Speed", movement.sqrMagnitude);
-        animator.SetBool("Turn Right", turnRight);
 
         if (Input.GetKeyDown(KeyCode.Space)) {
             Attack();
@@ -39,5 +41,19 @@ public class PlayerController : MonoBehaviour
 
     void Attack() {
         animator.SetTrigger("Attack");
+
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+
+        foreach (Collider2D enemy in hitEnemies) {
+            enemy.GetComponent<EnemyController>().TakeDamage(attackDamage);
+        }
+    }
+
+    private void OnDrawGizmosSelected() {
+        if (attackPoint == null) {
+            return;
+        }
+
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 }
