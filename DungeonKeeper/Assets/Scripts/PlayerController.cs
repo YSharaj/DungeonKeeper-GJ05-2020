@@ -16,12 +16,25 @@ public class PlayerController : MonoBehaviour
 
     Vector2 movement;
 
+    public HealthBar healthBar;
+    public int maxHealth = 100;
+    int currentHealth;
+
+    public float attackRate = 2f;
+    public float nextAttackTime = 0f;
+
+    void Start()
+    {
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+    }
+
     // Update is called once per frame
     void Update()
     {
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
-
+        
         if (movement.x < 0) {
             transform.localScale = new Vector3 (-1f, transform.localScale.y, transform.localScale.z);
         } else if (movement.x > 0) {
@@ -30,8 +43,13 @@ public class PlayerController : MonoBehaviour
 
         animator.SetFloat("Speed", movement.sqrMagnitude);
 
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            Attack();
+        if (Time.time >= nextAttackTime)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Attack();
+                nextAttackTime = Time.time + 1f / attackRate;
+            }
         }
     }
 
@@ -55,5 +73,21 @@ public class PlayerController : MonoBehaviour
         }
 
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
+
+        if (currentHealth < 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Debug.Log("You died!");
     }
 }
