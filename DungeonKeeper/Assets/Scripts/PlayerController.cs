@@ -23,6 +23,11 @@ public class PlayerController : MonoBehaviour
     public float attackRate = 2f;
     public float nextAttackTime = 0f;
 
+    public GameTimer gameTimer;
+    public SceneLoader sceneLoader;
+
+    bool isDead = false;
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -32,23 +37,29 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
-        
-        if (movement.x < 0) {
-            transform.localScale = new Vector3 (-1f, transform.localScale.y, transform.localScale.z);
-        } else if (movement.x > 0) {
-            transform.localScale = new Vector3 (1f, transform.localScale.y, transform.localScale.z);
-        }
-
-        animator.SetFloat("Speed", movement.sqrMagnitude);
-
-        if (Time.time >= nextAttackTime)
+        if (!isDead)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            movement.x = Input.GetAxisRaw("Horizontal");
+            movement.y = Input.GetAxisRaw("Vertical");
+
+            if (movement.x < 0)
             {
-                Attack();
-                nextAttackTime = Time.time + 1f / attackRate;
+                transform.localScale = new Vector3(-1f, transform.localScale.y, transform.localScale.z);
+            }
+            else if (movement.x > 0)
+            {
+                transform.localScale = new Vector3(1f, transform.localScale.y, transform.localScale.z);
+            }
+
+            animator.SetFloat("Speed", movement.sqrMagnitude);
+
+            if (Time.time >= nextAttackTime)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    Attack();
+                    nextAttackTime = Time.time + 1f / attackRate;
+                }
             }
         }
     }
@@ -82,6 +93,8 @@ public class PlayerController : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            currentHealth = 0;
+            isDead = true;
             Die();
         }
     }
@@ -89,6 +102,15 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         animator.SetTrigger("Die");
+        gameTimer.StopCountdown();
+        StartCoroutine(LoadLooseSceneIn());
+    }
+
+    IEnumerator LoadLooseSceneIn()
+    {
+        yield return new WaitForSeconds(0.3f);
+
+        sceneLoader.LoadLooseScene();
     }
 
     public void RestoreHealth(int health)

@@ -43,4 +43,9 @@ public class GameTimer : MonoBehaviour
             sceneLoader.LoadWinScene();
         }
     }
+
+    public void StopCountdown()
+    {
+        isCountdown = false;
+    }
 }

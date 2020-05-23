@@ -12,6 +12,6 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadLooseScene()
     {
-        SceneManager.LoadScene("Loose");
+        SceneManager.LoadScene("GameOver");
     }
 }

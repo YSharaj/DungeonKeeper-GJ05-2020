@@ -146,8 +146,9 @@ MonoBehaviour:
   attackDamage: 15
   attackRate: 2
   nextAttackTime: 0
-  canDropItems:
-  - {fileID: 1129273477051289506, guid: 5f63f1d18d9a94542941cfa0c9b1b901, type: 3}
+  healingPotionPrefab: {fileID: 1129273477051289506, guid: 5f63f1d18d9a94542941cfa0c9b1b901,
+    type: 3}
+  dropChanceInPercents: 25
 --- !u!1 &4608796799849401025
 GameObject:
   m_ObjectHideFlags: 0

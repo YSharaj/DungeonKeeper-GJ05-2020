@@ -12,7 +12,8 @@ public class EnemyController : MonoBehaviour
     public float attackRate = 2f;
     public float nextAttackTime = 0f;
 
-    public GameObject[] canDropItems;
+    public GameObject healingPotionPrefab;
+    public int dropChanceInPercents = 25;
 
     SpriteRenderer spriteRenderer;
     Color currentColor;
@@ -89,6 +90,16 @@ public class EnemyController : MonoBehaviour
     }
 
     void Die() {
+        DropItemsAfterDeath();
         Destroy(gameObject, 0.3f);
+    }
+
+    void DropItemsAfterDeath()
+    {
+        float chance = Random.Range(0f, 100f);
+        if (chance <= dropChanceInPercents)
+        {
+            Instantiate(healingPotionPrefab, transform.position, Quaternion.identity);
+        }
     }
 }
