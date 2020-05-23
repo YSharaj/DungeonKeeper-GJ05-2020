@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
 
-        if (currentHealth < 0)
+        if (currentHealth <= 0)
         {
             Die();
         }
@@ -88,6 +88,6 @@ public class PlayerController : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("You died!");
+        animator.SetTrigger("Die");
     }
 }
