@@ -12,8 +12,13 @@ public class EnemyController : MonoBehaviour
     public float attackRate = 2f;
     public float nextAttackTime = 0f;
 
+    public GameObject[] canDropItems;
+
     SpriteRenderer spriteRenderer;
     Color currentColor;
+
+    bool isAttacking = false;
+    GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -28,18 +33,30 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (isAttacking)
+        {
+            if (Time.time >= nextAttackTime && player != null)
+            {
+                Attack(player);
+                nextAttackTime = Time.time + 1f / attackRate;
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
-            if (Time.time >= nextAttackTime)
-            {
-                Attack(collision.gameObject);
-                nextAttackTime = Time.time + 1f / attackRate;
-            }
+            isAttacking = true;
+            player = collision.gameObject;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            isAttacking = false;
         }
     }
 

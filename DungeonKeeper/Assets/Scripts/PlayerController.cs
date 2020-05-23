@@ -90,4 +90,21 @@ public class PlayerController : MonoBehaviour
     {
         animator.SetTrigger("Die");
     }
+
+    public void RestoreHealth(int health)
+    {
+        currentHealth += health;
+
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+
+        healthBar.SetHealth(currentHealth);
+    }
+
+    public bool HealthIsFull()
+    {
+        return currentHealth == maxHealth;
+    }
 }

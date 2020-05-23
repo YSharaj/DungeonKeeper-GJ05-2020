@@ -143,6 +143,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  attackDamage: 15
+  attackRate: 2
+  nextAttackTime: 0
+  canDropItems:
+  - {fileID: 1129273477051289506, guid: 5f63f1d18d9a94542941cfa0c9b1b901, type: 3}
 --- !u!1 &4608796799849401025
 GameObject:
   m_ObjectHideFlags: 0
