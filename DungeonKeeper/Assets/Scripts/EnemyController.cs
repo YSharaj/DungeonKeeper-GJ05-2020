@@ -15,6 +15,9 @@ public class EnemyController : MonoBehaviour
     public GameObject healingPotionPrefab;
     public int dropChanceInPercents = 25;
 
+    public bool isHurtAnimation = true;
+
+    Animator animator;
     SpriteRenderer spriteRenderer;
     Color currentColor;
 
@@ -27,6 +30,7 @@ public class EnemyController : MonoBehaviour
         currentHealth = maxHealth;
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         currentColor = spriteRenderer.color;
+        animator = GetComponentInChildren<Animator>();
 
         GetComponent<AIDestinationSetter>().target = FindObjectOfType<PlayerController>().transform;
     }
@@ -40,6 +44,8 @@ public class EnemyController : MonoBehaviour
             {
                 Attack(player);
                 nextAttackTime = Time.time + 1f / attackRate;
+            } else {
+                animator.ResetTrigger("Attack");
             }
         }
     }
@@ -63,15 +69,19 @@ public class EnemyController : MonoBehaviour
 
     void Attack(GameObject player)
     {
+        animator.SetTrigger("Attack");
         player.GetComponent<PlayerController>().TakeDamage(attackDamage);
     }
 
     public void TakeDamage(int damage) {
         currentHealth -= damage;
 
-        // Play hurt animation
-        spriteRenderer.color = Color.red;
-        StartCoroutine(BlinkRed());
+        if (!isHurtAnimation) {
+            spriteRenderer.color = Color.red;
+            StartCoroutine(BlinkRed());
+		} else  {
+            animator.SetTrigger("Hurt");
+		}
 
         if (currentHealth <= 0) {
             Die();
@@ -80,8 +90,6 @@ public class EnemyController : MonoBehaviour
 
     IEnumerator BlinkRed()
     {
-        
-
         //yield on a new YieldInstruction that waits for 5 seconds.
         yield return new WaitForSeconds(0.3f);
 

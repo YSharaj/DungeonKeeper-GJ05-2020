@@ -142,13 +142,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0933136d74f4e466fbcf7741644904d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  attackDamage: 15
+  maxHealth: 25
+  attackDamage: 3
   attackRate: 2
   nextAttackTime: 0
   healingPotionPrefab: {fileID: 1129273477051289506, guid: 5f63f1d18d9a94542941cfa0c9b1b901,
     type: 3}
   dropChanceInPercents: 25
+  isHurtAnimation: 0
 --- !u!1 &4608796799849401025
 GameObject:
   m_ObjectHideFlags: 0
