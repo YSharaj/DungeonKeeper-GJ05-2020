@@ -10,7 +10,7 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene("Win");
     }
 
-    public void LoadLooseScene()
+    public void LoadLoseScene()
     {
         SceneManager.LoadScene("GameOver");
     }
@@ -19,4 +19,8 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene("GameScene");
     }
+
+    public void LoadMainMenu() {
+        SceneManager.LoadScene("MainMenu");
+	}
 }
