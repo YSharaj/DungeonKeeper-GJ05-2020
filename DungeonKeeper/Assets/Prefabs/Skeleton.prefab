@@ -145,7 +145,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2079851500170221467}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.42, y: -17.76, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2079851499528613471}
@@ -266,3 +266,5 @@ MonoBehaviour:
     type: 3}
   dropChanceInPercents: 25
   isHurtAnimation: 0
+  deathVFX: {fileID: 8400585883080656859, guid: b07c0753db7f147f09873f7c985fe33b,
+    type: 3}

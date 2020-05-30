@@ -17,6 +17,8 @@ public class EnemyController : MonoBehaviour
 
     public bool isHurtAnimation = true;
 
+    public GameObject deathVFX;
+
     Animator animator;
     SpriteRenderer spriteRenderer;
     Color currentColor;
@@ -77,8 +79,8 @@ public class EnemyController : MonoBehaviour
         currentHealth -= damage;
 
         if (!isHurtAnimation) {
-            spriteRenderer.color = Color.red;
-            StartCoroutine(BlinkRed());
+            //spriteRenderer.color = Color.red;
+            //StartCoroutine(BlinkRed());
 		} else  {
             animator.SetTrigger("Hurt");
 		}
@@ -99,7 +101,10 @@ public class EnemyController : MonoBehaviour
 
     void Die() {
         DropItemsAfterDeath();
-        Destroy(gameObject, 0.3f);
+        Destroy(gameObject);
+        //Vector3 explosionVector = new Vector3(transform.position.x, transform.position.y, 0f);
+        GameObject deathExplosion = Instantiate(deathVFX, transform.position, Quaternion.identity);
+        Destroy(deathExplosion, 1f);
     }
 
     void DropItemsAfterDeath()
