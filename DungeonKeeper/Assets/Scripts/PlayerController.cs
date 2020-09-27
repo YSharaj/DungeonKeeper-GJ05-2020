@@ -71,8 +71,9 @@ public class PlayerController : MonoBehaviour
     void Attack() {
         animator.SetTrigger("Attack");
 
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        FindObjectOfType<AudioManager>().Play("Slash");
 
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies) {
             enemy.GetComponent<EnemyController>().TakeDamage(attackDamage);
         }

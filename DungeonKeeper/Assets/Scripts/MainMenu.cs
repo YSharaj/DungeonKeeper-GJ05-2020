@@ -16,4 +16,12 @@ public class MainMenu : MonoBehaviour
         Debug.Log ("Quit!");
         Application.Quit();
     }
+
+    public void PlayScrollSound() {
+        FindObjectOfType<AudioManager>().Play("MenuScroll");
+	}
+
+    public void PlayButtonPushSound() {
+        FindObjectOfType<AudioManager>().Play("ButtonPush");
+	}
 }

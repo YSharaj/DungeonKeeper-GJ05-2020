@@ -13,6 +13,7 @@ public class Potion : MonoBehaviour
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
             if (!player.HealthIsFull())
             {
+                FindObjectOfType<AudioManager>().Play("Gulp");
                 player.RestoreHealth(healingPower);
                 Destroy(gameObject);
             }

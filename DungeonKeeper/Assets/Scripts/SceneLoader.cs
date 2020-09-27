@@ -17,6 +17,7 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadGameScene()
     {
+        FindObjectOfType<AudioManager>().Play("BG");
         SceneManager.LoadScene("GameScene");
     }
 

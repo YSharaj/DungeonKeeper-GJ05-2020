@@ -142,6 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0933136d74f4e466fbcf7741644904d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyName: Demon
   maxHealth: 25
   attackDamage: 3
   attackRate: 2

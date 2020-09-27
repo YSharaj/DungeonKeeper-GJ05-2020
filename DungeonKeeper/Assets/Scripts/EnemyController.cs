@@ -5,6 +5,8 @@ using Pathfinding;
 
 public class EnemyController : MonoBehaviour
 {
+    public string enemyName;
+
     public int maxHealth = 100;
     int currentHealth;
 
@@ -71,6 +73,11 @@ public class EnemyController : MonoBehaviour
 
     void Attack(GameObject player)
     {
+        if (enemyName == "Demon") {
+            FindObjectOfType<AudioManager>().Play("Bite");
+		} else if (enemyName == "Skeleton") {
+            FindObjectOfType<AudioManager>().Play("MegaSlash");
+        }
         animator.SetTrigger("Attack");
         player.GetComponent<PlayerController>().TakeDamage(attackDamage);
     }
